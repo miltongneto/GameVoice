@@ -37,25 +37,9 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
-    <TableLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/txt_voice"
-        android:rowCount="8"
-        >
+    <com.projeto.milton.multimidia.view.ImagemView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/animacao_player"/>
 
-
-
-        <TableRow android:id="@+id/row_1">
-        </TableRow>
-        <TableRow android:id="@+id/row_2">
-        </TableRow>
-        <TableRow android:id="@+id/row_3">
-            <ImageView
-                android:src="@mipmap/ic_launcher"
-                android:layout_column="1"
-                android:layout_gravity="center_horizontal"
-                android:id="@+id/imageView" />
-        </TableRow>
-    </TableLayout>
 </RelativeLayout>

@@ -20,7 +20,7 @@ public class ImagemView extends View {
     private int y;
     private int largura;
     private int altura;
-    private int movimento = 100;
+    private int movimento = 200;
 
     public ImagemView(Context context, AttributeSet attrs){
         super(context, attrs);

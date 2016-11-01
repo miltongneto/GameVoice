@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.projeto.milton.multimidia.ui.AnimacaoActivity;
 import com.projeto.milton.multimidia.ui.VoiceRecognitionTeste;
+import com.projeto.milton.multimidia.view.ImagemView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +33,11 @@ public class MainActivity extends Activity {
     TextView txt_voice;
     @InjectView(R.id.main_btn_animacao)
     Button btn_animacao;
+    
+    @InjectView(R.id.animacao_player)
+    ImagemView imagem;
+    
+    private boolean recognizarOn;
 
     private static final int REQUEST_CODE = 123;
 
@@ -43,10 +49,13 @@ public class MainActivity extends Activity {
 
         ButterKnife.inject(this);
 
+        recognizarOn = false;
+
     }
 
     @OnClick(R.id.btn_voice)
     public void voice(View view){
+        recognizarOn = true;
         PackageManager pm = getPackageManager();
         List<ResolveInfo> activities = pm.queryIntentActivities(new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH),0);
         if(activities.size() == 0){
@@ -70,6 +79,13 @@ public class MainActivity extends Activity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        if(recognizarOn)
+            recognize();
+    }
+
+    @Override
     protected void onDestroy() {
         ButterKnife.reset(this);
         super.onDestroy();
@@ -90,9 +106,13 @@ public class MainActivity extends Activity {
             Log.i("RecognizerIntent","Funcionou");
 
             if(results != null){
-                Log.i("Testando",results.get(0));
-                txt_voice.setText(results.get(0));
+                String result = results.get(0);
+                Log.i("Testando",result);
+                txt_voice.setText(result);
 
+                imagem.mover(result);
+
+                if(result.equals("parar")) recognizarOn = false;
             }
         }else{
             Log.i("RecognizerIntent","Erro");
