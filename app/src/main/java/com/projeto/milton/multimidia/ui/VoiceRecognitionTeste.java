@@ -6,18 +6,15 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Bundle;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.TableLayout;
 
 import com.projeto.milton.multimidia.R;
 import com.projeto.milton.multimidia.view.ImagemView;
@@ -28,20 +25,24 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
-public class VoiceRecognitionTeste extends Activity implements RecognitionListener {
+public class VoiceRecognitionTeste extends Activity implements RecognitionListener{
     private static final int REQUEST_INTERNET = 200;
 
     @InjectView(R.id.btn_speak)
     Button btn_speak;
     @InjectView(R.id.btn_stop)
     Button btn_stop;
+
     @InjectView(R.id.speech_player)
     ImagemView imagem;
 
+    @InjectView(R.id.speech_teste)
+    ImagemView teste;
+
+
     private SpeechRecognizer speech = null;
     private Intent recognizerIntent;
-    private String LOG_TAG = "VoiceRecognitionActivity";
-
+    private String LOG_TAG = "VoiceRecognitionTeste";
     private boolean recognizarOn;
 
     @Override
@@ -58,21 +59,22 @@ public class VoiceRecognitionTeste extends Activity implements RecognitionListen
     }
 
     @OnClick(R.id.btn_speak)
-    public void start(View v){
+    public void start(View v) {
         recognizarOn = true;
         recognize();
     }
-    public void stop(View v){
+
+    public void stop(View v) {
         recognizarOn = false;
     }
 
-    public void recognize(){
+    public void recognize() {
         speech = SpeechRecognizer.createSpeechRecognizer(this);
         speech.setRecognitionListener(this);
 
         recognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         recognizerIntent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, this.getPackageName());
-        recognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,"pt-BR");
+        recognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, "pt-BR");
         recognizerIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);
         speech.startListening(recognizerIntent);
     }
@@ -82,7 +84,7 @@ public class VoiceRecognitionTeste extends Activity implements RecognitionListen
         if (requestCode == REQUEST_INTERNET) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 //start audio recording or whatever you planned to do
-            }else if (grantResults[0] == PackageManager.PERMISSION_DENIED){
+            } else if (grantResults[0] == PackageManager.PERMISSION_DENIED) {
                 if (ActivityCompat.shouldShowRequestPermissionRationale(VoiceRecognitionTeste.this, Manifest.permission.RECORD_AUDIO)) {
                     //Show an explanation to the user *asynchronously*
                     AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -94,7 +96,7 @@ public class VoiceRecognitionTeste extends Activity implements RecognitionListen
                         }
                     });
                     ActivityCompat.requestPermissions(VoiceRecognitionTeste.this, new String[]{Manifest.permission.RECORD_AUDIO}, REQUEST_INTERNET);
-                }else{
+                } else {
                     //Never ask again and handle your app without permission.
                 }
             }
@@ -105,7 +107,7 @@ public class VoiceRecognitionTeste extends Activity implements RecognitionListen
     @Override
     public void onResume() {
         super.onResume();
-        if(recognizarOn) recognize();
+        if (recognizarOn) recognize();
     }
 
     @Override
@@ -115,7 +117,6 @@ public class VoiceRecognitionTeste extends Activity implements RecognitionListen
             speech.destroy();
             Log.i(LOG_TAG, "destroy");
         }
-
     }
 
     @Override
@@ -208,5 +209,5 @@ public class VoiceRecognitionTeste extends Activity implements RecognitionListen
         }
         return message;
     }
-
 }
+

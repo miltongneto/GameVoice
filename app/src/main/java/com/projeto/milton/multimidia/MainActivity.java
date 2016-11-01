@@ -36,7 +36,7 @@ public class MainActivity extends Activity {
     
     @InjectView(R.id.animacao_player)
     ImagemView imagem;
-    
+
     private boolean recognizarOn;
 
     private static final int REQUEST_CODE = 123;
