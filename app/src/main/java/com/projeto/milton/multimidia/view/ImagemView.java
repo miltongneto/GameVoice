@@ -6,6 +6,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.ImageView;
 
 import static com.projeto.milton.multimidia.R.mipmap.ic_launcher;
 
@@ -14,7 +15,7 @@ import static com.projeto.milton.multimidia.R.mipmap.ic_launcher;
  * Created by Milton on 28/10/2016.
  */
 
-public class ImagemView extends View {
+public class ImagemView extends ImageView {
     private Drawable imagem;
     private int x;
     private int y;
@@ -27,9 +28,28 @@ public class ImagemView extends View {
         imagem = context.getDrawable(ic_launcher);
         largura = imagem.getIntrinsicWidth();
         altura = imagem.getIntrinsicHeight();
-        x = 150;
-        y = 300;
+        x = 450;
+        y = 600;
         //setFocusable(true);
+    }
+
+    public ImagemView(Context context){
+        super(context);
+        imagem = context.getDrawable(ic_launcher);
+        largura = imagem.getIntrinsicWidth();
+        altura = imagem.getIntrinsicHeight();
+        x = 450;
+        y = 600;
+        //setFocusable(true);
+    }
+
+    public void loadImagem(Drawable imagem, int largura, int altura, int movimento, int x, int y){
+        this.imagem = imagem;
+        this.largura = largura;
+        this.altura = altura;
+        this.movimento = 25;
+        this.x = 450;
+        this.y = 250;
     }
 
     @Override
