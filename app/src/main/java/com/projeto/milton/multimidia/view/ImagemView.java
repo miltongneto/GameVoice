@@ -49,7 +49,9 @@ public class ImagemView extends ImageView {
     public EnemyView getEnemy(){
         return this.enemy;
     }
-
+    public void setEnemy(EnemyView enemy){
+        this.enemy = enemy;
+    }
     public void loadImagem(Drawable imagem, int largura, int altura, int movimento, int x, int y){
         //this.imagem = imagem;
         this.largura = largura;

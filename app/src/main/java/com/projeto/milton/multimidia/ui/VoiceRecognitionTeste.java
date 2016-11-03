@@ -89,8 +89,12 @@ public class VoiceRecognitionTeste extends Activity implements RecognitionListen
     final Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            if(imagem.moverEnemy())
+            if(imagem.moverEnemy()){
                 handler.postDelayed(runnable,100);
+                if(recognizarOn)
+                    recognize();
+            }
+
             else
                 printMsg("Voce perdeu");
         }
@@ -102,9 +106,8 @@ public class VoiceRecognitionTeste extends Activity implements RecognitionListen
 
     @OnClick(R.id.btn_speak)
     public void start(View v){
-        //recognizarOn = true;
+        recognizarOn = true;
         recognize();
-        onResume();
     }
     public void stop(View v){
         recognizarOn = false;
@@ -119,7 +122,6 @@ public class VoiceRecognitionTeste extends Activity implements RecognitionListen
         recognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,"pt-BR");
         recognizerIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);
         speech.startListening(recognizerIntent);
-        recognizarOn = true;
     }
 
     @Override
@@ -150,10 +152,14 @@ public class VoiceRecognitionTeste extends Activity implements RecognitionListen
     @Override
     public void onResume() {
         super.onResume();
-        if(recognizarOn){
-            recognizarOn = false;
-            recognize();
-        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ButterKnife.reset(this);
+        speech.stopListening();
+        //speech.destroy();
     }
 
     @Override
