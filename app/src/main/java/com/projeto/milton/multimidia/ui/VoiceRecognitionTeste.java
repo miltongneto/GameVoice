@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.projeto.milton.multimidia.R;
 import com.projeto.milton.multimidia.view.ImagemView;
@@ -43,12 +44,9 @@ public class VoiceRecognitionTeste extends Activity implements RecognitionListen
     @InjectView(R.id.speech_player)
     ImagemView imagem;
 
-    ImagemView teste;
-
     private SpeechRecognizer speech = null;
     private Intent recognizerIntent;
     private String LOG_TAG = "VoiceRecognitionActivity";
-    private ImagemView imagemEnemy;
 
     private boolean recognizarOn;
 
@@ -61,7 +59,6 @@ public class VoiceRecognitionTeste extends Activity implements RecognitionListen
 
         ButterKnife.inject(this);
 
-        criarEnemy();
 
         if (ContextCompat.checkSelfPermission(VoiceRecognitionTeste.this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(VoiceRecognitionTeste.this, new String[]{Manifest.permission.RECORD_AUDIO}, REQUEST_INTERNET);
@@ -70,6 +67,7 @@ public class VoiceRecognitionTeste extends Activity implements RecognitionListen
         handler.post(runnable);
     }
 
+    /*
     public void criarEnemy(){
         LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -82,26 +80,31 @@ public class VoiceRecognitionTeste extends Activity implements RecognitionListen
         layout.addView(imagemEnemy);
     }
 
+    public void loadEnemy(){
+        Drawable drawable = this.getDrawable(ic_notification_overlay);
+        enemy.loadImagem(drawable,drawable.getIntrinsicWidth(),drawable.getIntrinsicHeight(),40,5,5);
+    }
+    */
+
     final Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            //imagemEnemy.mover("baixo");
-            handler.postDelayed(runnable,100);
+            if(imagem.moverEnemy())
+                handler.postDelayed(runnable,100);
+            else
+                printMsg("Voce perdeu");
         }
     };
 
-
-//    handler.postDelayed(new Runnable() {
-//        @Override
-//        public void run() {
-//            //Do something after 100ms
-//        }
-//    }, 100);
+    public void printMsg (String msg){
+        Toast.makeText(this,msg, Toast.LENGTH_LONG).show();
+    }
 
     @OnClick(R.id.btn_speak)
     public void start(View v){
-        recognizarOn = true;
+        //recognizarOn = true;
         recognize();
+        onResume();
     }
     public void stop(View v){
         recognizarOn = false;
@@ -116,6 +119,7 @@ public class VoiceRecognitionTeste extends Activity implements RecognitionListen
         recognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,"pt-BR");
         recognizerIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);
         speech.startListening(recognizerIntent);
+        recognizarOn = true;
     }
 
     @Override
@@ -146,7 +150,10 @@ public class VoiceRecognitionTeste extends Activity implements RecognitionListen
     @Override
     public void onResume() {
         super.onResume();
-        if(recognizarOn) recognize();
+        if(recognizarOn){
+            recognizarOn = false;
+            recognize();
+        }
     }
 
     @Override

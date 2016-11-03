@@ -33,7 +33,7 @@ public class MainActivity extends Activity {
     TextView txt_voice;
     @InjectView(R.id.main_btn_animacao)
     Button btn_animacao;
-    
+
     @InjectView(R.id.animacao_player)
     ImagemView imagem;
 

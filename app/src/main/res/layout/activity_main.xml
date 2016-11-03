@@ -37,9 +37,12 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
+
     <com.projeto.milton.multimidia.view.ImagemView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:id="@+id/animacao_player"/>
+        android:id="@+id/animacao_player"
+        />
+
 
 </RelativeLayout>

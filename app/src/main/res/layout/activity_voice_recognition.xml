@@ -9,7 +9,8 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
     tools:context=".ui.VoiceRecognitionTeste"
-    android:id="@+id/speech_layout">
+    android:id="@+id/speech_layout"
+    android:weightSum="1">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -32,9 +33,12 @@
 
     </LinearLayout>
 
+
+
     <com.projeto.milton.multimidia.view.ImagemView
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:id="@+id/speech_player"/>
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/speech_player"
+        />
 
 </LinearLayout>

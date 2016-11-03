@@ -17,6 +17,7 @@ import static com.projeto.milton.multimidia.R.mipmap.ic_launcher;
 
 public class ImagemView extends ImageView {
     private Drawable imagem;
+    private EnemyView enemy;
     private int x;
     private int y;
     private int largura;
@@ -30,6 +31,7 @@ public class ImagemView extends ImageView {
         altura = imagem.getIntrinsicHeight();
         x = 450;
         y = 600;
+        enemy = new EnemyView(context);
         //setFocusable(true);
     }
 
@@ -38,18 +40,23 @@ public class ImagemView extends ImageView {
         imagem = context.getDrawable(ic_launcher);
         largura = imagem.getIntrinsicWidth();
         altura = imagem.getIntrinsicHeight();
-        x = 450;
-        y = 600;
+        x = 300;
+        y = 300;
+        enemy = new EnemyView(context);
         //setFocusable(true);
     }
 
+    public EnemyView getEnemy(){
+        return this.enemy;
+    }
+
     public void loadImagem(Drawable imagem, int largura, int altura, int movimento, int x, int y){
-        this.imagem = imagem;
+        //this.imagem = imagem;
         this.largura = largura;
         this.altura = altura;
         this.movimento = 25;
-        this.x = 450;
-        this.y = 250;
+        this.x = 300;
+        this.y = 300;
     }
 
     @Override
@@ -57,6 +64,8 @@ public class ImagemView extends ImageView {
         super.onDraw(canvas);
         imagem.setBounds(x, y, x+largura, y+altura);
         imagem.draw(canvas);
+        enemy.draw(canvas);
+        invalidate();
     }
 
     public boolean mover(String direcao){
@@ -81,5 +90,25 @@ public class ImagemView extends ImageView {
         }
         invalidate();
         return moveu;
+    }
+
+    public boolean moverEnemy(){
+        boolean result;
+        if(enemyWin()){
+            result = false;
+        }else{
+            result = enemy.mover("baixo");
+        }
+        return  result;
+    }
+
+    public boolean enemyWin() {
+        float enemyPosY = enemy.getMovimento() + enemy.getY();
+        float enemyPosX = enemy.getX();
+        if (enemyPosY >= y && enemyPosY <= y+altura) {
+            if (enemyPosX >= x && enemyPosX <= x+largura)
+                return true;
+        }
+        return false;
     }
 }
