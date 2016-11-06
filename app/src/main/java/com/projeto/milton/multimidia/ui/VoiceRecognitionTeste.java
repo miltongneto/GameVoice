@@ -3,11 +3,9 @@ package com.projeto.milton.multimidia.ui;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.speech.RecognitionListener;
@@ -17,22 +15,18 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.projeto.milton.multimidia.R;
-import com.projeto.milton.multimidia.view.ImagemView;
+import com.projeto.milton.multimidia.view.GameView;
+import com.projeto.milton.multimidia.view.PlayerView;
 
 import java.util.ArrayList;
-import java.util.TimerTask;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
-
-import static android.R.drawable.ic_notification_overlay;
-import static com.projeto.milton.multimidia.R.mipmap.ic_launcher;
 
 
 public class VoiceRecognitionTeste extends Activity implements RecognitionListener {
@@ -41,8 +35,8 @@ public class VoiceRecognitionTeste extends Activity implements RecognitionListen
     @InjectView(R.id.speech_layout)
     LinearLayout layout;
 
-    @InjectView(R.id.speech_player)
-    ImagemView imagem;
+    @InjectView(R.id.speech_game)
+    GameView game;
 
     private SpeechRecognizer speech = null;
     private Intent recognizerIntent;
@@ -89,12 +83,11 @@ public class VoiceRecognitionTeste extends Activity implements RecognitionListen
     final Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            if(imagem.moverEnemy()){
+            if(game.play()){
                 handler.postDelayed(runnable,100);
                 if(recognizarOn)
                     recognize();
             }
-
             else
                 printMsg("Voce perdeu");
         }
@@ -216,7 +209,7 @@ public class VoiceRecognitionTeste extends Activity implements RecognitionListen
         String text = "";
         for (String result : matches){
             text += result + "\n";
-            imagem.mover(result);
+            game.getPlayer().mover(result);
         }
         Log.i("Text", text);
     }

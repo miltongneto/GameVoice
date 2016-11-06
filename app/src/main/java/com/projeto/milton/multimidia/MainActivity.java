@@ -15,7 +15,6 @@ import android.widget.Toast;
 
 import com.projeto.milton.multimidia.ui.AnimacaoActivity;
 import com.projeto.milton.multimidia.ui.VoiceRecognitionTeste;
-import com.projeto.milton.multimidia.view.ImagemView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,8 +33,6 @@ public class MainActivity extends Activity {
     @InjectView(R.id.main_btn_animacao)
     Button btn_animacao;
 
-    @InjectView(R.id.animacao_player)
-    ImagemView imagem;
 
     private boolean recognizarOn;
 
@@ -108,9 +105,8 @@ public class MainActivity extends Activity {
             if(results != null){
                 String result = results.get(0);
                 Log.i("Testando",result);
-                txt_voice.setText(result);
+                //txt_voice.setText(result);
 
-                imagem.mover(result);
 
                 if(result.equals("parar")) recognizarOn = false;
             }

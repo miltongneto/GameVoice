@@ -2,11 +2,10 @@ package com.projeto.milton.multimidia.ui;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 
 import com.projeto.milton.multimidia.R;
-import com.projeto.milton.multimidia.view.ImagemView;
+import com.projeto.milton.multimidia.view.PlayerView;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -14,7 +13,7 @@ import butterknife.OnClick;
 
 public class AnimacaoActivity extends AppCompatActivity {
     @InjectView(R.id.animacao_player)
-    ImagemView imagem;
+    PlayerView imagem;
     @InjectView(R.id.animacao_btn_direita)
     Button btn_dir;
     @InjectView(R.id.animacao_btn_esquerda)

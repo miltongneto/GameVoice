@@ -33,12 +33,9 @@
 
     </LinearLayout>
 
-
-
-    <com.projeto.milton.multimidia.view.ImagemView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:id="@+id/speech_player"
-        />
+    <com.projeto.milton.multimidia.view.GameView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/speech_game"/>
 
 </LinearLayout>

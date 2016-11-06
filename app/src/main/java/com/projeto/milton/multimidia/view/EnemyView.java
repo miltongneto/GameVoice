@@ -12,22 +12,46 @@ import static android.R.drawable.ic_notification_overlay;
  * Created by Milton on 02/11/2016.
  */
 
-public class EnemyView extends ImageView {
+public class EnemyView extends GameObjectView{
     private int altura;
     private int largura;
     private int x;
     private int y;
     private int movimento;
+    private PlayerView player;
 
     public EnemyView(Context context) {
         super(context);
-        Drawable imagem = context.getDrawable(ic_notification_overlay);
+        init();
+    }
+
+    public EnemyView(Context context, AttributeSet attrs){
+        super(context, attrs);
+        init();
+    }
+    public EnemyView(Context context, PlayerView player) {
+        super(context);
+        this.player = player;
+        init();
+    }
+
+
+    public void init() {
+        Drawable imagem = getContext().getDrawable(ic_notification_overlay);
         setImageDrawable(imagem);
         largura = imagem.getIntrinsicWidth();
         altura = imagem.getIntrinsicHeight();
-        x = 450;
+        x = 400;
         y = 25;
-        movimento = 10;
+        movimento = 15;
+    }
+
+
+    public boolean process() {
+        if(enemyWin())
+            return false;
+
+        return true;
     }
 
     @Override
@@ -36,6 +60,19 @@ public class EnemyView extends ImageView {
         getDrawable().setBounds(x, y, x + largura, y + altura);
         getDrawable().draw(canvas);
     }
+
+    public boolean enemyWin() {
+        mover("baixo");
+        float playerPosY = player.getY();
+        float playerPosX = player.getX();
+        if (y >= playerPosY && y <= playerPosY + player.getAltura()) {
+            if (x >= playerPosX && x+largura <= playerPosX + player.getLargura())
+                return true;
+        }
+        return false;
+    }
+
+
 
     public boolean mover(String direcao) {
         boolean moveu = false;
@@ -58,13 +95,11 @@ public class EnemyView extends ImageView {
         return largura;
     }
 
-    @Override
-    public float getX() {
-        return x;
+    public PlayerView getPlayer() {
+        return player;
     }
 
-    @Override
-    public float getY() {
-        return y;
+    public void setPlayer(PlayerView player) {
+        this.player = player;
     }
 }
