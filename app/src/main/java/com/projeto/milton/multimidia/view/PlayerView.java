@@ -46,19 +46,19 @@ public class PlayerView extends GameObjectView {
         boolean moveu = false;
         switch (direcao){
             case "direita":
-                setX(getX() + movimento);
+                setX(x + movimento);
                 moveu = true;
                 break;
             case "esquerda":
-                setX(getX() - movimento);
+                setX(x - movimento);
                 moveu = true;
                 break;
             case "cima":
-                setY(getY() - movimento);
+                setY(y - movimento);
                 moveu = true;
                 break;
             case "baixo":
-                setY(getY() + movimento);
+                setY(y + movimento);
                 moveu = true;
                 break;
         }

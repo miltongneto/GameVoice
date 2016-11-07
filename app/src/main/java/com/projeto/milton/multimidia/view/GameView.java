@@ -43,18 +43,20 @@ public class GameView extends View {
     }
 
     public boolean play(){
-        boolean result;
-        result = player.process();
-        if(!result) return result;
+
+        if(!player.process()) return false;
 
         for(EnemyView enemy : enemies){
-            result = enemy.process();
-            if(!result) return result;
+            if(!enemy.process()) return false;
         }
-        return result;
+        return true;
     }
 
     public PlayerView getPlayer() {
         return player;
+    }
+
+    public void addEnemy(EnemyView enemy){
+        enemies.add(enemy);
     }
 }

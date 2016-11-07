@@ -19,10 +19,13 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.projeto.milton.multimidia.R;
+import com.projeto.milton.multimidia.ia.ProcessIA;
+import com.projeto.milton.multimidia.view.EnemyView;
 import com.projeto.milton.multimidia.view.GameView;
 import com.projeto.milton.multimidia.view.PlayerView;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -38,10 +41,12 @@ public class VoiceRecognitionTeste extends Activity implements RecognitionListen
     @InjectView(R.id.speech_game)
     GameView game;
 
+    private ProcessIA ia;
+
     private SpeechRecognizer speech = null;
     private Intent recognizerIntent;
     private String LOG_TAG = "VoiceRecognitionActivity";
-
+    private long COUNT_TIME = 0;
     private boolean recognizarOn;
 
     final Handler handler = new Handler();
@@ -53,6 +58,7 @@ public class VoiceRecognitionTeste extends Activity implements RecognitionListen
 
         ButterKnife.inject(this);
 
+        //ia = new ProcessIA(game);
 
         if (ContextCompat.checkSelfPermission(VoiceRecognitionTeste.this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(VoiceRecognitionTeste.this, new String[]{Manifest.permission.RECORD_AUDIO}, REQUEST_INTERNET);
@@ -61,29 +67,11 @@ public class VoiceRecognitionTeste extends Activity implements RecognitionListen
         handler.post(runnable);
     }
 
-    /*
-    public void criarEnemy(){
-        LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT);
-
-        imagemEnemy = new ImagemView(this);
-        imagemEnemy.setLayoutParams(lparams);
-
-        Drawable drawable = this.getDrawable(ic_notification_overlay);
-        imagemEnemy.loadImagem(drawable,drawable.getIntrinsicWidth(),drawable.getIntrinsicHeight(),40,5,5);
-        layout.addView(imagemEnemy);
-    }
-
-    public void loadEnemy(){
-        Drawable drawable = this.getDrawable(ic_notification_overlay);
-        enemy.loadImagem(drawable,drawable.getIntrinsicWidth(),drawable.getIntrinsicHeight(),40,5,5);
-    }
-    */
-
     final Runnable runnable = new Runnable() {
         @Override
         public void run() {
             if(game.play()){
+                simplesIA();
                 handler.postDelayed(runnable,100);
                 if(recognizarOn)
                     recognize();
@@ -93,6 +81,16 @@ public class VoiceRecognitionTeste extends Activity implements RecognitionListen
         }
     };
 
+    public void simplesIA(){
+        COUNT_TIME += 1;
+        if(COUNT_TIME>60){
+            EnemyView e = new EnemyView(this,game.getPlayer());
+            int posX = (int)(Math.random()*1000);
+            e.setX(posX);
+            game.addEnemy(e);
+            COUNT_TIME = 0;
+        }
+    }
     public void printMsg (String msg){
         Toast.makeText(this,msg, Toast.LENGTH_LONG).show();
     }

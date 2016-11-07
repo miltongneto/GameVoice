@@ -15,8 +15,6 @@ import static android.R.drawable.ic_notification_overlay;
 public class EnemyView extends GameObjectView{
     private int altura;
     private int largura;
-    private int x;
-    private int y;
     private int movimento;
     private PlayerView player;
 
@@ -41,9 +39,9 @@ public class EnemyView extends GameObjectView{
         setImageDrawable(imagem);
         largura = imagem.getIntrinsicWidth();
         altura = imagem.getIntrinsicHeight();
-        x = 400;
-        y = 25;
-        movimento = 15;
+        setX(400);
+        setY(25);
+        movimento = 10;
     }
 
 
@@ -56,12 +54,16 @@ public class EnemyView extends GameObjectView{
 
     @Override
     protected void onDraw(Canvas canvas) {
+        int x = (int) getX();
+        int y = (int) getY();
         super.onDraw(canvas);
         getDrawable().setBounds(x, y, x + largura, y + altura);
         getDrawable().draw(canvas);
     }
 
     public boolean enemyWin() {
+        int x = (int) getX();
+        int y = (int) getY();
         mover("baixo");
         float playerPosY = player.getY();
         float playerPosX = player.getX();
@@ -76,7 +78,8 @@ public class EnemyView extends GameObjectView{
 
     public boolean mover(String direcao) {
         boolean moveu = false;
-        this.y = this.y + movimento;
+        int y = (int) getY();
+        setY(y + movimento);
         moveu = true;
 
         invalidate();
