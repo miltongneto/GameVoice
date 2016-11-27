@@ -8,6 +8,8 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
 
+import util.ResultEnum;
+
 import static com.projeto.milton.multimidia.R.mipmap.ic_launcher;
 
 
@@ -76,8 +78,8 @@ public class PlayerView extends GameObjectView {
         setY(750);
     }
 
-    public boolean process() {
-        return true;
+    public int process() {
+        return ResultEnum.CONTINUAR;
     }
 
     public int getAltura() {

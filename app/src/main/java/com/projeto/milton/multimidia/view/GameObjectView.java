@@ -28,7 +28,7 @@ public abstract class GameObjectView extends ImageView {
 
     public abstract void init();
 
-    public abstract boolean process();
+    public abstract int process();
 
     @Override
     public float getX() {

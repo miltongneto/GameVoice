@@ -1,9 +1,16 @@
 package com.projeto.milton.multimidia.ia;
 
 import android.content.Context;
+import android.os.Debug;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.Display;
 
+import com.projeto.milton.multimidia.view.BonusView;
 import com.projeto.milton.multimidia.view.EnemyView;
 import com.projeto.milton.multimidia.view.GameView;
+
+import util.ResultEnum;
 
 /**
  * Created by Milton on 07/11/2016.
@@ -15,43 +22,126 @@ public class ProcessIA {
     private int NIVEL;
     private long XP;
     private long COUNT_TIME;
+    private long TIME_BONUS;
+    private int height;
+    private int width;
+    private int resultGame;
 
-    public ProcessIA(Context context, GameView game){
+    public ProcessIA(Context context, GameView game, int height, int width){
         this.context = context;
         this.game = game;
         this.NIVEL = 1;
         this.COUNT_TIME = 0;
         this.XP = 0;
+        this.TIME_BONUS = 0;
+        this.height = height;
+        this.width = width;
+        Log.i("Largura ", width + "");
     }
 
-    public boolean runGame(){
-        if(game.play()) {
+    public int runGame(){
+        resultGame = game.play();
+        if(resultGame == ResultEnum.CONTINUAR) {
+            sendBonus();
             switch (NIVEL) {
                 case 1:
                     iaNivelUm();
                     break;
                 case 2:
-                    return false;
+                    iaNivelDois();
+                    break;
+                case 3:
+                    iaNivelTres();
+                    break;
             }
-            return  true;
+        }else if(resultGame == ResultEnum.BONUS_XP){
+            this.XP += 300;
         }
 
-        return false;
+        return resultGame;
     }
 
     public void iaNivelUm(){
         COUNT_TIME += 1;
         XP += 1;
 
-        if(COUNT_TIME > 60){
-            EnemyView e = new EnemyView(context,game.getPlayer());
-            int posX = (int)(Math.random()*1000);
-            e.setX(posX);
-            game.addEnemy(e);
+        if(COUNT_TIME >= 50){
+            EnemyView enemy = new EnemyView(context,game.getPlayer());
+            int posX = (int)(Math.random()*width);
+            enemy.setX(posX);
+            game.addEnemy(enemy);
             COUNT_TIME = 0;
-        }else if(XP >= 400){
+        }else if(XP >= 150){
             NIVEL = 2;
             COUNT_TIME = 0;
         }
+    }
+
+    public void iaNivelDois(){
+        COUNT_TIME += 1;
+        XP += 2;
+
+        if(COUNT_TIME >= 35){
+            createSmartEnemy();
+
+            COUNT_TIME = 0;
+        }else if(XP >= 600){
+            NIVEL = 3;
+            COUNT_TIME = 0;
+        }
+    }
+
+    public void iaNivelTres(){
+        COUNT_TIME += 1;
+        XP += 3;
+
+        for(EnemyView enemy : game.getEnemies()){
+            int distance = (int) (game.getPlayer().getY() - enemy.getY());
+            if(distance > 200 && distance < 260){
+                int side = (int) (game.getPlayer().getX() - enemy.getX());
+                if(side > 0 && side > 10){
+                    resultGame = ResultEnum.LIE_LEFT;
+                }else if(side < 0 && side < 10){
+                    resultGame = ResultEnum.LIE_RIGHT;
+                }
+            }
+        }
+
+        if(COUNT_TIME > 35) {
+            createSmartEnemy();
+            COUNT_TIME = 0;
+        }else if(XP >= 3000){
+            NIVEL = 4;
+            COUNT_TIME = 0;
+        }
+
+    }
+
+    public void createSmartEnemy(){
+        float playerPosX = game.getPlayer().getX();
+        int min = (int) (playerPosX - 30);
+        //int max = (int) (playerPosX + 30);
+
+        int enemyPos = min +(int) (Math.random()*60);
+
+        EnemyView enemy = new EnemyView(context,game.getPlayer());
+        enemy.setX(enemyPos);
+        enemy.setMovimento(15);
+        game.addEnemy(enemy);
+    }
+
+    public void sendBonus(){
+        TIME_BONUS ++;
+        if(TIME_BONUS >= 150){
+            BonusView bonus = new BonusView(context,game.getPlayer());
+            bonus.setX((int)(Math.random()*width));
+            game.addBonus(bonus);
+
+            TIME_BONUS = 0;
+        }
+    }
+
+    public long getXp(){
+        return this.XP;
     }
 }

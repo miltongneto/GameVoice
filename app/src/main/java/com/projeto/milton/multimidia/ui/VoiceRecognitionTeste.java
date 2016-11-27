@@ -13,20 +13,25 @@ import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.projeto.milton.multimidia.R;
 import com.projeto.milton.multimidia.ia.ProcessIA;
 import com.projeto.milton.multimidia.view.GameView;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import util.ResultEnum;
 
 
 public class VoiceRecognitionTeste extends Activity implements RecognitionListener {
@@ -37,6 +42,12 @@ public class VoiceRecognitionTeste extends Activity implements RecognitionListen
 
     @InjectView(R.id.speech_game)
     GameView game;
+
+    @InjectView(R.id.speech_xp)
+    TextView txt_xp;
+
+    @InjectView(R.id.speech_message)
+    TextView txt_message;
 
     private ProcessIA ia;
 
@@ -53,8 +64,14 @@ public class VoiceRecognitionTeste extends Activity implements RecognitionListen
         setContentView(R.layout.activity_voice_recognition);
 
         ButterKnife.inject(this);
+        DisplayMetrics metrics = new DisplayMetrics();
+        this.getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        int width = metrics.widthPixels;
+        int height = metrics.heightPixels;
 
-        ia = new ProcessIA(this,game);
+        txt_message.setText("");
+
+        ia = new ProcessIA(this,game, height, width);
 
         if (ContextCompat.checkSelfPermission(VoiceRecognitionTeste.this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(VoiceRecognitionTeste.this, new String[]{Manifest.permission.RECORD_AUDIO}, REQUEST_INTERNET);
@@ -66,13 +83,23 @@ public class VoiceRecognitionTeste extends Activity implements RecognitionListen
     final Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            if(ia.runGame()){
+            int resultGame = ia.runGame();
+            if(resultGame == ResultEnum.PERDEU){
+                printMsg("Voce perdeu");
+
+            }else{
+                if(resultGame == ResultEnum.LIE_LEFT){
+                    txt_message.setText("ESQUERDA");
+                }else if(resultGame == ResultEnum.LIE_RIGHT){
+                    txt_message.setText("DIREITA");
+                }else if(resultGame == ResultEnum.CONTINUAR){
+                    txt_message.setText("");
+                }
+                txt_xp.setText("XP " + ia.getXp());
                 handler.postDelayed(runnable,100);
                 if(recognizarOn)
                     recognize();
             }
-            else
-                printMsg("Voce perdeu");
         }
     };
 
