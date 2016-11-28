@@ -10,49 +10,20 @@
     tools:context="com.projeto.milton.multimidia.MainActivity"
     android:background="@color/colorPrimary">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/txt_voice"
-        android:layout_below="@+id/btn_voice"
-        android:layout_alignStart="@+id/btn_voice" />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="jogo"
-        android:id="@+id/main_btn_speech"
-        android:layout_alignParentEnd="true" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/main_btn_animacao"
-        android:text="Movimentacao"/>
-
-
-    <LinearLayout
+        android:background="#0d2397"
+        android:textColor="#ffffff"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="43dp"
-        android:layout_marginStart="54dp"
-        android:layout_below="@+id/txt_voice"
-        android:layout_alignParentStart="true">
+        android:layout_height="60dp"
+        android:text="JOGAR"
+        android:id="@+id/main_btn_jogar"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="17dp" />
 
-        <ImageView
-            android:layout_width="220dp"
-            android:layout_height="220dp"
-            android:src="@drawable/runnergame"/>
-
-    </LinearLayout>
-
-    <ImageButton
-        android:layout_width="75dp"
-        android:layout_height="75dp"
-        android:id="@+id/btn_voice"
-        android:src="@android:drawable/presence_audio_online"
-        android:layout_marginTop="18dp"
-        android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/main_btn_animacao"
-        android:layout_marginStart="17dp" />
-
+        <RelativeLayout
+            android:layout_width="40dp"
+            android:layout_height="30dp"
+            ></RelativeLayout>
 </RelativeLayout>

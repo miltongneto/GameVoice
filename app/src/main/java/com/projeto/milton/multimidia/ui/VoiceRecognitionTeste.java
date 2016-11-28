@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.speech.RecognitionListener;
@@ -53,11 +54,11 @@ public class VoiceRecognitionTeste extends Activity implements RecognitionListen
 
     private SpeechRecognizer speech = null;
     private Intent recognizerIntent;
-    private String LOG_TAG = "VoiceRecognitionActivity";
+    private String LOG_TAG = "VoiceRecognition";
     private boolean recognizarOn;
 
     final Handler handler = new Handler();
-
+    MediaPlayer mediaPlayer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,6 +87,7 @@ public class VoiceRecognitionTeste extends Activity implements RecognitionListen
             int resultGame = ia.runGame();
             if(resultGame == ResultEnum.PERDEU){
                 printMsg("Voce perdeu");
+                somPerdeu(mediaPlayer);
 
             }else{
                 if(resultGame == ResultEnum.LIE_LEFT){
@@ -105,6 +107,10 @@ public class VoiceRecognitionTeste extends Activity implements RecognitionListen
 
     public void printMsg (String msg){
         Toast.makeText(this,msg, Toast.LENGTH_LONG).show();
+    }
+    public void somPerdeu(MediaPlayer mediaPlayer){
+        mediaPlayer =MediaPlayer.create(this,R.raw.musicagameover);
+        mediaPlayer.start();
     }
 
     @OnClick(R.id.btn_speak)
