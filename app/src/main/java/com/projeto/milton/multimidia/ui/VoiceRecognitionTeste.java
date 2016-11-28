@@ -25,8 +25,6 @@ import com.projeto.milton.multimidia.R;
 import com.projeto.milton.multimidia.ia.ProcessIA;
 import com.projeto.milton.multimidia.view.GameView;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 
 import butterknife.ButterKnife;
@@ -96,6 +94,8 @@ public class VoiceRecognitionTeste extends Activity implements RecognitionListen
                     txt_message.setText("DIREITA");
                 }else if(resultGame == ResultEnum.CONTINUAR){
                     txt_message.setText("");
+                }else if(resultGame == ResultEnum.BONUS_XP){
+                    pegarBonus(mediaPlayer);
                 }
                 txt_xp.setText("XP " + ia.getXp());
                 handler.postDelayed(runnable,100);
@@ -110,6 +110,10 @@ public class VoiceRecognitionTeste extends Activity implements RecognitionListen
     }
     public void somPerdeu(MediaPlayer mediaPlayer){
         mediaPlayer =MediaPlayer.create(this,R.raw.musicagameover);
+        mediaPlayer.start();
+    }
+    public void pegarBonus(MediaPlayer mediaPlayer){
+        mediaPlayer =MediaPlayer.create(this,R.raw.musicabonus);
         mediaPlayer.start();
     }
 

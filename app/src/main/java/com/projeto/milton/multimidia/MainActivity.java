@@ -6,7 +6,10 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
+
 import com.projeto.milton.multimidia.ui.VoiceRecognitionTeste;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -16,7 +19,8 @@ public class MainActivity extends Activity {
 
     @InjectView(R.id.main_btn_jogar)
     Button btn_speech;
-
+    @InjectView(R.id.mudo)
+    RelativeLayout layoutMudo;
     MediaPlayer mediaPlayer;
 
     private boolean recognizarOn;
@@ -35,6 +39,12 @@ public class MainActivity extends Activity {
         mediaPlayer =MediaPlayer.create(this,R.raw.musicaabertura);
         mediaPlayer.start();
         mediaPlayer.setLooping(true);
+        layoutMudo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mudo();
+            }
+        });
 
     }
     @OnClick(R.id.main_btn_jogar)
