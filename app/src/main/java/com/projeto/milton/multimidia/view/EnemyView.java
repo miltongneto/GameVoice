@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import util.ResultEnum;
 import static android.R.drawable.ic_notification_overlay;
+import static com.projeto.milton.multimidia.R.drawable.enemy1;
 
 /**
  * Created by Milton on 02/11/2016.
@@ -16,6 +17,7 @@ public class EnemyView extends GameObjectView{
     private int largura;
     private int movimento;
     private PlayerView player;
+    private boolean goDown;
 
     public EnemyView(Context context) {
         super(context);
@@ -34,12 +36,13 @@ public class EnemyView extends GameObjectView{
 
 
     public void init() {
-        Drawable imagem = getContext().getDrawable(ic_notification_overlay);
+        Drawable imagem = getContext().getDrawable(enemy1);
         setImageDrawable(imagem);
-        largura = imagem.getIntrinsicWidth();
-        altura = imagem.getIntrinsicHeight();
+        largura = 100; //imagem.getIntrinsicWidth();
+        altura = 100; //imagem.getIntrinsicHeight();
         setX(400);
         setY(25);
+        goDown = true;
         movimento = 10;
     }
 
@@ -63,7 +66,10 @@ public class EnemyView extends GameObjectView{
     public boolean enemyWin() {
         int x = (int) getX();
         int y = (int) getY();
-        mover("baixo");
+
+        if(goDown)  mover("baixo");
+        else mover("cima");
+
         float playerPosY = player.getY();
         float playerPosX = player.getX();
         if (y >= playerPosY && y <= playerPosY + player.getAltura()) {
@@ -78,9 +84,17 @@ public class EnemyView extends GameObjectView{
     public boolean mover(String direcao) {
         boolean moveu = false;
         int y = (int) getY();
-        setY(y + movimento);
-        moveu = true;
 
+        switch (direcao){
+            case "cima":
+                setY(y - movimento);
+                moveu = true;
+                break;
+            case "baixo":
+                setY(y + movimento);
+                moveu = true;
+                break;
+        }
         invalidate();
         return moveu;
     }
@@ -107,5 +121,13 @@ public class EnemyView extends GameObjectView{
 
     public void setPlayer(PlayerView player) {
         this.player = player;
+    }
+
+    public boolean isGoDown() {
+        return goDown;
+    }
+
+    public void setGoDown(boolean goDown) {
+        this.goDown = goDown;
     }
 }

@@ -2,15 +2,13 @@ package com.projeto.milton.multimidia.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
-import android.view.View;
-import android.widget.ImageView;
 
 import util.ResultEnum;
 
-import static com.projeto.milton.multimidia.R.mipmap.ic_launcher;
+import static com.projeto.milton.multimidia.R.drawable.player;
+import static com.projeto.milton.multimidia.R.drawable.playerinvertido;
 
 
 /**
@@ -71,9 +69,9 @@ public class PlayerView extends GameObjectView {
 
 
     public void init() {
-        imagem = getContext().getDrawable(ic_launcher);
-        largura = imagem.getIntrinsicWidth();
-        altura = imagem.getIntrinsicHeight();
+        imagem = getContext().getDrawable(player);
+        largura = 150;//imagem.getIntrinsicWidth();
+        altura = 150;//imagem.getIntrinsicHeight();
         setX(400);
         setY(750);
     }
@@ -88,5 +86,16 @@ public class PlayerView extends GameObjectView {
 
     public int getLargura() {
         return largura;
+    }
+
+    public void goTop(){
+        setX(400);
+        setY(25);
+        imagem = getContext().getDrawable(playerinvertido);
+    }
+
+    public void gotBottom(){
+        setX(400);
+        setY(750);
     }
 }

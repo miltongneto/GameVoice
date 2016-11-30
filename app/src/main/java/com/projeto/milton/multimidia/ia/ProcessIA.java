@@ -26,6 +26,7 @@ public class ProcessIA {
     private int height;
     private int width;
     private int resultGame;
+    private boolean isDown;
 
     public ProcessIA(Context context, GameView game, int height, int width){
         this.context = context;
@@ -36,6 +37,7 @@ public class ProcessIA {
         this.TIME_BONUS = 0;
         this.height = height;
         this.width = width;
+        this.isDown = true;
         Log.i("Largura ", width + "");
     }
 
@@ -48,10 +50,14 @@ public class ProcessIA {
                     iaNivelUm();
                     break;
                 case 2:
-                    iaNivelDois();
+                    iaNivelQuatro();
+                    //iaNivelDois();
                     break;
                 case 3:
                     iaNivelTres();
+                    break;
+                case 4:
+                    iaNivelQuatro();
                     break;
             }
         }else if(resultGame == ResultEnum.BONUS_XP){
@@ -114,7 +120,22 @@ public class ProcessIA {
             NIVEL = 4;
             COUNT_TIME = 0;
         }
+    }
 
+    public void iaNivelQuatro(){
+        COUNT_TIME += 1;
+        XP += 4;
+
+        if(isDown) swap();
+
+        if(COUNT_TIME >= 35){
+            createSmartEnemy();
+
+            COUNT_TIME = 0;
+        }else if(XP >= 4000){
+            NIVEL = 5;
+            COUNT_TIME = 0;
+        }
     }
 
     public void createSmartEnemy(){
@@ -127,6 +148,10 @@ public class ProcessIA {
         EnemyView enemy = new EnemyView(context,game.getPlayer());
         enemy.setX(enemyPos);
         enemy.setMovimento(15);
+        if(!isDown){
+            enemy.setGoDown(false);
+            enemy.setY(1000);
+        }
         game.addEnemy(enemy);
     }
 
@@ -141,6 +166,10 @@ public class ProcessIA {
         }
     }
 
+    public void swap(){
+        isDown = false;
+        game.getPlayer().goTop();
+    }
     public long getXp(){
         return this.XP;
     }

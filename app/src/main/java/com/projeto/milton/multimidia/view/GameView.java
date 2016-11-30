@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +32,8 @@ public class GameView extends View {
 
     public void init(){
         player = new PlayerView(getContext());
+        ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(150,150);
+        player.setLayoutParams(lp);
         enemies = new ArrayList<EnemyView>();
         bonus = new ArrayList<BonusView>();
         enemies.add(new EnemyView(getContext(),player));
@@ -66,6 +69,8 @@ public class GameView extends View {
     }
 
     public void addEnemy(EnemyView enemy){
+        ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(100,100);
+        enemy.setLayoutParams(lp);
         enemies.add(enemy);
     }
 
