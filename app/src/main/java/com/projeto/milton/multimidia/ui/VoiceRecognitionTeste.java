@@ -109,11 +109,11 @@ public class VoiceRecognitionTeste extends Activity implements RecognitionListen
         Toast.makeText(this,msg, Toast.LENGTH_LONG).show();
     }
     public void somPerdeu(MediaPlayer mediaPlayer){
-        mediaPlayer =MediaPlayer.create(this,R.raw.musicagameover);
+        mediaPlayer =MediaPlayer.create(this,R.raw.musica_game_over);
         mediaPlayer.start();
     }
     public void pegarBonus(MediaPlayer mediaPlayer){
-        mediaPlayer =MediaPlayer.create(this,R.raw.musicabonus);
+        mediaPlayer =MediaPlayer.create(this,R.raw.musica_bonus);
         mediaPlayer.start();
     }
 

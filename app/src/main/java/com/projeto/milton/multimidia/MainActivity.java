@@ -2,8 +2,6 @@ package com.projeto.milton.multimidia;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
@@ -11,6 +9,7 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import com.projeto.milton.multimidia.ui.VoiceRecognitionTeste;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
@@ -36,7 +35,7 @@ public class MainActivity extends Activity {
         ButterKnife.inject(this);
 
         recognizarOn = false;
-        mediaPlayer =MediaPlayer.create(this,R.raw.musicaabertura);
+        mediaPlayer = MediaPlayer.create(this,R.raw.musica_abertura);
         mediaPlayer.start();
         mediaPlayer.setLooping(true);
         layoutMudo.setOnClickListener(new View.OnClickListener() {
