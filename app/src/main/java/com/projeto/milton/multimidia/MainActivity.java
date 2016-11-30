@@ -6,7 +6,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.RelativeLayout;
+import android.widget.ImageButton;
 
 import com.projeto.milton.multimidia.ui.VoiceRecognitionTeste;
 
@@ -19,10 +19,11 @@ public class MainActivity extends Activity {
     @InjectView(R.id.main_btn_jogar)
     Button btn_speech;
     @InjectView(R.id.mudo)
-    RelativeLayout layoutMudo;
+    ImageButton imgMudo;
     MediaPlayer mediaPlayer;
 
     private boolean recognizarOn;
+    private boolean tocar;
 
     private static final int REQUEST_CODE = 123;
 
@@ -34,14 +35,20 @@ public class MainActivity extends Activity {
 
         ButterKnife.inject(this);
 
+        tocar=false;
         recognizarOn = false;
-        mediaPlayer = MediaPlayer.create(this,R.raw.musica_abertura);
-        mediaPlayer.start();
-        mediaPlayer.setLooping(true);
-        layoutMudo.setOnClickListener(new View.OnClickListener() {
+
+        play_music();
+
+        imgMudo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(tocar=true){
                 mudo();
+                }
+                else {
+                    play_music();
+                }
             }
         });
 
@@ -53,7 +60,19 @@ public class MainActivity extends Activity {
         startActivity(intent);
     }
     public void mudo(){
+        if (tocar==true){
         mediaPlayer.stop();
+        tocar=false;
+        }
+    }
+    public void play_music(){
+        if(tocar==false){
+            mediaPlayer = MediaPlayer.create(this,R.raw.musica_abertura);
+            mediaPlayer.start();
+            mediaPlayer.setLooping(true);
+            tocar=true;
+        }
+
     }
 
 

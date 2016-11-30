@@ -22,9 +22,12 @@
         android:layout_alignParentStart="true"
         android:layout_marginBottom="17dp" />
 
-        <RelativeLayout
-            android:id="@+id/mudo"
-            android:layout_width="40dp"
-            android:layout_height="30dp"
-            android:background="@drawable/som"></RelativeLayout>
+    <ImageButton
+        android:id="@+id/mudo"
+        android:layout_width="40dp"
+        android:layout_height="30dp"
+        android:background="@drawable/som"
+        android:layout_marginTop="34dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
 </RelativeLayout>
