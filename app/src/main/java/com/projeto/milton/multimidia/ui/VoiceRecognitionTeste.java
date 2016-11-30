@@ -79,6 +79,30 @@ public class VoiceRecognitionTeste extends Activity implements RecognitionListen
         handler.post(runnable);
     }
 
+
+    public void alerta()
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Voce perdeu");
+        builder.setMessage("Voce fez " + " pontos");
+
+        builder.setPositiveButton("Tentar Novamente", new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+                dialog.dismiss();
+                tryAgain();
+            }
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
+
+    }
+
+    public void tryAgain() {startActivity(new Intent(this, VoiceRecognitionTeste.class));}
+
     final Runnable runnable = new Runnable() {
         @Override
         public void run() {
@@ -87,6 +111,7 @@ public class VoiceRecognitionTeste extends Activity implements RecognitionListen
                 printMsg("Voce perdeu");
                 somPerdeu(mediaPlayer);
 
+               alerta();
             }else{
                 if(resultGame == ResultEnum.LIE_LEFT){
                     txt_message.setText("ESQUERDA");
