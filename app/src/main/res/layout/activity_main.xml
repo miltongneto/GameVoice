@@ -22,11 +22,10 @@
         android:layout_marginBottom="17dp" />
 
     <ImageButton
+        android:layout_marginTop="70dp"
         android:id="@+id/mudo"
-        android:layout_width="40dp"
-        android:layout_height="30dp"
-        android:background="@drawable/som"
-        android:layout_marginTop="34dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/ic_action_name_tocar"
+         />
 </RelativeLayout>

@@ -43,11 +43,13 @@ public class MainActivity extends Activity {
         imgMudo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(tocar=true){
+                if(tocar==true){
                 mudo();
+                imgMudo.setBackgroundResource(R.drawable.ic_action_name_mudo);
                 }
                 else {
                     play_music();
+                    imgMudo.setBackgroundResource(R.drawable.ic_action_name_tocar);
                 }
             }
         });
