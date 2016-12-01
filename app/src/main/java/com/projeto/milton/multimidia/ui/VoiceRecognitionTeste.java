@@ -6,7 +6,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -89,7 +88,7 @@ public class VoiceRecognitionTeste extends Activity implements RecognitionListen
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Voce perdeu");
-        builder.setMessage("Voce fez " + " pontos");
+        builder.setMessage("Voce conseguiu alcançar " + this.txt_xp.getText().toString());
 
         builder.setPositiveButton("Tentar Novamente", new DialogInterface.OnClickListener()
         {
@@ -118,19 +117,22 @@ public class VoiceRecognitionTeste extends Activity implements RecognitionListen
 
                alerta();
             }else{
-                if(resultGame == ResultEnum.LIE_LEFT){
-                    txt_message.setText("ESQUERDA");
-                }else if(resultGame == ResultEnum.LIE_RIGHT){
-                    txt_message.setText("DIREITA");
-                }else if(resultGame == ResultEnum.CONTINUAR){
-                    txt_message.setText("");
-                }else if(resultGame == ResultEnum.BONUS_XP){
-                    pegarBonus(mediaPlayer);
+                if (txt_message != null && txt_xp != null) {
+                    if (resultGame == ResultEnum.LIE_LEFT) {
+                        txt_message.setText("ESQUERDA");
+                    } else if (resultGame == ResultEnum.LIE_RIGHT) {
+                        txt_message.setText("DIREITA");
+                    } else if (resultGame == ResultEnum.CONTINUAR) {
+                        txt_message.setText("");
+                    } else if (resultGame == ResultEnum.BONUS_XP) {
+                        pegarBonus(mediaPlayer);
+                    }
+
+                    txt_xp.setText("XP " + ia.getXp());
+                    handler.postDelayed(runnable, 100);
+                    if (recognizarOn)
+                        recognize();
                 }
-                txt_xp.setText("XP " + ia.getXp());
-                handler.postDelayed(runnable,100);
-                if(recognizarOn)
-                    recognize();
             }
         }
     };
@@ -204,10 +206,17 @@ public class VoiceRecognitionTeste extends Activity implements RecognitionListen
     }
 
     @Override
+    public void onStop()
+    {
+        super.onStop();
+        ButterKnife.reset(this);
+        if (speech != null)
+            speech.stopListening();
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
-        ButterKnife.reset(this);
-        speech.stopListening();
         //speech.destroy();
     }
 
