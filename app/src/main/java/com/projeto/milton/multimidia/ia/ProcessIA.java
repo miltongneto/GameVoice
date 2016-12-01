@@ -50,8 +50,7 @@ public class ProcessIA {
                     iaNivelUm();
                     break;
                 case 2:
-                    iaNivelQuatro();
-                    //iaNivelDois();
+                    iaNivelDois();
                     break;
                 case 3:
                     iaNivelTres();
@@ -116,7 +115,7 @@ public class ProcessIA {
         if(COUNT_TIME > 35) {
             createSmartEnemy();
             COUNT_TIME = 0;
-        }else if(XP >= 3000){
+        }else if(XP >= 1000){
             NIVEL = 4;
             COUNT_TIME = 0;
         }

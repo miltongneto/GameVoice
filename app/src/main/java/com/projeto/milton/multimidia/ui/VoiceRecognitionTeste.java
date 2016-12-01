@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -71,6 +72,7 @@ public class VoiceRecognitionTeste extends Activity implements RecognitionListen
         int height = metrics.heightPixels;
 
         txt_message.setText("");
+        txt_xp.setTextColor(Color.WHITE);
         txt_xp.setTextSize(30);
 
         ia = new ProcessIA(this,game, height, width);

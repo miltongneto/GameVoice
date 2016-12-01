@@ -8,6 +8,8 @@ import android.util.AttributeSet;
 import util.ResultEnum;
 
 import static com.projeto.milton.multimidia.R.drawable.player;
+import static com.projeto.milton.multimidia.R.drawable.player_esquerda;
+import static com.projeto.milton.multimidia.R.drawable.player_esquerda_invertido;
 import static com.projeto.milton.multimidia.R.drawable.playerinvertido;
 
 
@@ -20,6 +22,7 @@ public class PlayerView extends GameObjectView {
     private int largura;
     private int altura;
     private int movimento = 200;
+    private boolean inverted = false;
 
     public PlayerView(Context context){
         super(context);
@@ -43,7 +46,17 @@ public class PlayerView extends GameObjectView {
     public boolean mover(String direcao){
         int x = (int) getX();
         int y = (int) getY();
+
+        loadImage(direcao);
+
         boolean moveu = false;
+        if(inverted){
+            if(direcao.equals("direita")) direcao = "esquerda";
+            else if(direcao.equals("esquerda")) direcao = "direita";
+            else if(direcao.equals("cima")) direcao = "baixo";
+            else if(direcao.equals("baixo")) direcao = "cima";
+        }
+
         switch (direcao){
             case "direita":
                 setX(x + movimento);
@@ -53,6 +66,7 @@ public class PlayerView extends GameObjectView {
                 setX(x - movimento);
                 moveu = true;
                 break;
+
             case "cima":
                 setY(y - movimento);
                 moveu = true;
@@ -66,14 +80,22 @@ public class PlayerView extends GameObjectView {
         return moveu;
     }
 
-
-
     public void init() {
         imagem = getContext().getDrawable(player);
         largura = 150;//imagem.getIntrinsicWidth();
         altura = 150;//imagem.getIntrinsicHeight();
         setX(400);
         setY(750);
+    }
+
+    public void loadImage(String direcao){
+        if(inverted){
+            if(direcao.equals("esquerda"))  imagem = getContext().getDrawable(player_esquerda_invertido);
+            else if(direcao.equals("direita"))  imagem = getContext().getDrawable(playerinvertido);
+        }else{
+            if(direcao.equals("esquerda"))  imagem = getContext().getDrawable(player_esquerda);
+            else if(direcao.equals("direita")) imagem = getContext().getDrawable(player);
+        }
     }
 
     public int process() {
@@ -89,6 +111,7 @@ public class PlayerView extends GameObjectView {
     }
 
     public void goTop(){
+        inverted = true;
         setX(400);
         setY(25);
         imagem = getContext().getDrawable(playerinvertido);
