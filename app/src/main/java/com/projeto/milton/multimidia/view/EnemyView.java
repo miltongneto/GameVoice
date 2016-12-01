@@ -3,6 +3,7 @@ package com.projeto.milton.multimidia.view;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
+import android.os.Debug;
 import android.util.AttributeSet;
 import util.ResultEnum;
 import static android.R.drawable.ic_notification_overlay;
@@ -64,14 +65,20 @@ public class EnemyView extends GameObjectView{
     }
 
     public boolean enemyWin() {
-        int x = (int) getX();
-        int y = (int) getY();
+        int x = (int) getX() - (getLargura()/2);
+        int y = (int) getY() - (getAltura()/2);
 
         if(goDown)  mover("baixo");
         else mover("cima");
 
-        float playerPosY = player.getY();
-        float playerPosX = player.getX();
+        int i;
+        if(getY() > 640){
+            i = 0;
+        }
+
+        float playerPosY = player.getY() - (player.getAltura()/2);
+        float playerPosX = player.getX() - (player.getLargura()/2);
+
         if (y >= playerPosY && y <= playerPosY + player.getAltura()) {
             if (x >= playerPosX && x+largura <= playerPosX + player.getLargura())
                 return true;
@@ -113,6 +120,14 @@ public class EnemyView extends GameObjectView{
 
     public PlayerView getPlayer() {
         return player;
+    }
+
+    public void setAltura(int altura) {
+        this.altura = altura;
+    }
+
+    public void setLargura(int largura) {
+        this.largura = largura;
     }
 
     public void setMovimento(int movimento){

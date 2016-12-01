@@ -70,6 +70,9 @@ public class GameView extends View {
 
     public void addEnemy(EnemyView enemy){
         ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(100,100);
+        if(enemy instanceof FastEnemyView){
+            lp = new ViewGroup.LayoutParams(120,70);
+        }
         enemy.setLayoutParams(lp);
         enemies.add(enemy);
     }

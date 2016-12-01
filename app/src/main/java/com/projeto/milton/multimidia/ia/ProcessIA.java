@@ -8,7 +8,10 @@ import android.view.Display;
 
 import com.projeto.milton.multimidia.view.BonusView;
 import com.projeto.milton.multimidia.view.EnemyView;
+import com.projeto.milton.multimidia.view.FastEnemyView;
 import com.projeto.milton.multimidia.view.GameView;
+
+import java.util.Random;
 
 import util.ResultEnum;
 
@@ -138,15 +141,25 @@ public class ProcessIA {
     }
 
     public void createSmartEnemy(){
+
         float playerPosX = game.getPlayer().getX();
         int min = (int) (playerPosX - 30);
         //int max = (int) (playerPosX + 30);
 
         int enemyPos = min +(int) (Math.random()*60);
 
-        EnemyView enemy = new EnemyView(context,game.getPlayer());
+        Random random = new Random();
+        double escolha = Math.random();
+
+        EnemyView enemy;
+        if(escolha <= 0.66){
+            enemy = new EnemyView(context,game.getPlayer());
+            enemy.setMovimento(15);
+        }else{
+            enemy = new FastEnemyView(context,game.getPlayer());
+        }
         enemy.setX(enemyPos);
-        enemy.setMovimento(15);
+
         if(!isDown){
             enemy.setGoDown(false);
             enemy.setY(1000);
