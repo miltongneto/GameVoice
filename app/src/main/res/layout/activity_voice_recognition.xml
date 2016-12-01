@@ -40,6 +40,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/speech_xp"
+        android:textColor="#FFFFFFFF"
+        android:textStyle="bold"
         android:text="XP"
         android:layout_gravity="right"/>
 
@@ -53,7 +55,7 @@
             android:layout_height="wrap_content"
             android:text="Direcao"
             android:textStyle="bold"
-            android:textColor="#000000"
+            android:textColor="#FFFFFFFF"
             android:id="@+id/speech_message"
             android:gravity="center_vertical"
             android:layout_centerHorizontal="true"
