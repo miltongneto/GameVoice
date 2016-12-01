@@ -72,7 +72,7 @@ public class VoiceRecognitionTeste extends Activity implements RecognitionListen
         int height = metrics.heightPixels;
 
         txt_message.setText("");
-        txt_xp.setTextColor(Color.WHITE);
+//        txt_xp.setTextColor(Color.WHITE);
         txt_xp.setTextSize(30);
 
         ia = new ProcessIA(this,game, height, width);
